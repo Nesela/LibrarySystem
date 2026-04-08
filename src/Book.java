@@ -15,6 +15,17 @@ public class Book {
 
     }
 
+    public  static  void showList() {
+        for (Book b : bookList) {
+            System.out.printf(b.bookTitle + " 책은");
+            if (b.isBook){
+                System.out.println(" 대여 상태입니다.");
+            } else {
+                System.out.println(" 미대여 상태입니다.");
+            }
+        }
+    }
+
     // 테스트용 코드 프론트랑 연결시에는 스캐너 x
     public static void register() {
         Scanner sc = new Scanner(System.in);
@@ -26,6 +37,8 @@ public class Book {
 
     public static void main(String[] args) {
         register();
+        showList();
+
         System.out.println("총 권수: " + allBook);
     }
 
