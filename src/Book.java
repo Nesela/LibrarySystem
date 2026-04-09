@@ -28,6 +28,7 @@ public class Book {
 
     // 테스트용 코드 프론트랑 연결시에는 스캐너 x
     public static void register() {
+        System.out.println("등록하실 책을 지정해주세요.");
         Scanner sc = new Scanner(System.in);
         String title = sc.nextLine();
         Book b = new Book(title);
@@ -36,14 +37,37 @@ public class Book {
     }
 
     public static void main(String[] args) {
-        register();
-        showList();
+        int menu = 0;
+        Scanner sc = new Scanner(System.in);
 
-        System.out.println("총 권수: " + allBook);
+        while (true){
+            System.out.println("(1) 책 리스트 확인");
+            System.out.println("(2) 대여하기");
+            System.out.println("(3) 반납하기");
+            System.out.println("(4) 신규 책 등록 하기");
+            System.out.println("(0) 메뉴 종료 하기");
+
+            //유저 입력값을 통째로 저장후 숫자로 변환
+            String tem = sc.nextLine();
+            menu = Integer.parseInt(tem);
+
+            if (menu == 0) {
+                break;
+            } else if (menu == 1) {
+                showList();
+                System.out.println("책 리스트를 불러왔습니다.");
+            } else if (menu == 2) {
+                rental();
+            }
+        }
+
+
+
+//        showList();
     }
 
     // 대여
-    public void rental() {
+    public static void rental() {
         if (this.isBook) {
             System.out.println(this.bookTitle + " 은 현재 대여상태입니다");
             return;
