@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Book {
     static int allBook;
     static ArrayList<Book> bookList = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
     String bookTitle;
     boolean isBook;
 
@@ -18,7 +19,7 @@ public class Book {
     // 테스트용 코드 프론트랑 연결시에는 스캐너 x
     public static void register() {
         System.out.println("등록하실 책을 지정해주세요.");
-        Scanner sc = new Scanner(System.in);
+
         String title = sc.nextLine();
         Book b = new Book(title);
         bookList.add(b);
@@ -27,12 +28,13 @@ public class Book {
 
     public static void main(String[] args) {
         int menu = 0;
-        Scanner sc = new Scanner(System.in);
+
 
         while (true) {
             System.out.println("(1) 신규 책 등록 하기");
             System.out.println("(2) 대여하기");
             System.out.println("(3) 반납하기");
+            System.out.println("(4) ");
             System.out.println("(0) 메뉴 종료 하기");
 
             //유저 입력값을 통째로 저장후 숫자로 변환
@@ -47,6 +49,8 @@ public class Book {
                 rental();
             } else if (menu == 3) {
                 returnBook();
+            } else if (menu == 4) {
+                showList();
             }
         }
 
@@ -54,7 +58,7 @@ public class Book {
 
     // 대여
     public static void rental() {
-        Scanner sc = new Scanner(System.in);
+
 
         System.out.println("대여하실 책의 제목을 입력해주세요");
         String usRental = sc.nextLine();
@@ -77,7 +81,7 @@ public class Book {
 
     //반납
     public static void returnBook() {
-        Scanner sc = new Scanner(System.in);
+
 
         System.out.println("반납하실 책의 제목을 입력해주세요");
         String usRental = sc.nextLine();
@@ -96,6 +100,18 @@ public class Book {
             }
         }
         System.out.println("찾으시는 '" + usRental + "' 책은 등록되어 있지 않습니다.");
-
     }
+
+    public static void showList() {
+        if (bookList.isEmpty()) {
+            System.out.println("책이 존재하지 않습니다");
+            return;
+        } else {
+            for (Book b : bookList) {
+
+            }
+        }
+    }
+
+
 }
