@@ -21,9 +21,22 @@ public class Book {
     public static void register() {
         System.out.println("등록하실 책을 지정해주세요.");
 
+        //유저 입력 텍스트를 변수(title)에 저장
         String title = sc.nextLine();
-        Book b = new Book(title);
-        bookList.add(b);
+
+        //리스트내에 Book 개체를 확인
+        for (Book b : bookList) {
+            //b 변수는 리스트에 위치한 책들
+            if (b.bookTitle.equals(title)) {
+                System.out.println("이미 등록된 책입니다.");
+                return;
+            }
+        }
+        //for문 통과시 실행, 새로운책 등록
+        Book newBook = new Book(title);
+
+        //리스트에 책 추가 for문에서 쓰이는 리스트
+        bookList.add(newBook);
         System.out.println(title + " 의 책이 등록되었습니다.");
     }
 
@@ -32,10 +45,10 @@ public class Book {
 
 
         while (true) {
-            System.out.println("(1) 신규 책 등록 하기");
-            System.out.println("(2) 대여하기");
-            System.out.println("(3) 반납하기");
-            System.out.println("(4) 책 리스트 확인");
+            System.out.println("(1) 대여하기");
+            System.out.println("(2) 반납하기");
+            System.out.println("(3) 책 리스트 확인");
+            System.out.println("(9) 관리자 메뉴");
             System.out.println("(0) 메뉴 종료 하기");
 
             //유저 입력값을 통째로 저장후
@@ -46,13 +59,13 @@ public class Book {
                 // 입력값을 숫자로 변환
                 menu = Integer.parseInt(tem);
                 if (menu == 1) {
-                    register();
-                } else if (menu == 2) {
                     rental();
-                } else if (menu == 3) {
+                } else if (menu == 2) {
                     returnBook();
-                } else if (menu == 4) {
+                } else if (menu == 3) {
                     showList();
+                } else if (menu == 9) {
+                    register();
                 } else if (menu == 0) {
                     break;
                 }
@@ -62,8 +75,11 @@ public class Book {
             }
         }
     }
-    // 대여
+    public static void adminMenu() {
 
+    }
+
+    // 대여
     public static void rental() {
 
 
