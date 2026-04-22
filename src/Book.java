@@ -16,8 +16,23 @@ public class Book {
         allBook++;
 
     }
+    //책 삭제
+    public static void deletBook() {
+        System.out.println("삭제할 책의 제목을 입력해주세요");
+        String title = sc.nextLine();
+        for (Book b : bookList) {
+            if (b.bookTitle.equals(title)) {
+                bookList.remove(b);
+                allBook--;
+                System.out.println(title + " 책이 삭제되었습니다.");
+                return;
+            }
+        }
+            System.out.println(title + " 않은 책입니다.");
+    }
 
     // 테스트용 코드 프론트랑 연결시에는 스캐너 x
+    // 책 등록
     public static void register() {
         System.out.println("등록하실 책을 지정해주세요.");
 
@@ -40,6 +55,7 @@ public class Book {
         System.out.println(title + " 의 책이 등록되었습니다.");
     }
 
+    //메인
     public static void main(String[] args) {
         int menu = 0;
 
@@ -65,7 +81,7 @@ public class Book {
                 } else if (menu == 3) {
                     showList();
                 } else if (menu == 9) {
-                    register();
+                    adminMenu();
                 } else if (menu == 0) {
                     break;
                 }
@@ -75,8 +91,34 @@ public class Book {
             }
         }
     }
+    //어드민 메뉴
     public static void adminMenu() {
+        int adMenu = 0;
 
+        while (true) {
+
+
+            System.out.println("(1) 책 등록하기");
+            System.out.println("(2) 책 삭제하기");
+            System.out.println("(0) 메인메뉴로 이동");
+
+            String tem = sc.nextLine();
+
+            try {
+                adMenu = Integer.parseInt(tem);
+
+                if (adMenu == 1) {
+                    register();
+                } else if (adMenu == 2) {
+                    deletBook();
+                } else if (adMenu == 0) {
+                    break;
+                }
+
+            } catch (Exception e) {
+                System.out.println("숫자만 입력해주세요");
+            }
+        }
     }
 
     // 대여
