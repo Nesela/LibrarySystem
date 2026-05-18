@@ -1,3 +1,5 @@
+import com.mysql.cj.protocol.Resultset;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -22,7 +24,7 @@ public class MainLivrary {
 
                 int menu = Integer.parseInt(sc.nextLine());
                 if (menu == 1) {
-
+                    bookList(stme);
                 } else if (menu == 0) {
                     break;
                 }
@@ -32,5 +34,19 @@ public class MainLivrary {
             e.printStackTrace();
         }
 
+    }
+
+    public static void bookList(Statement stme) {
+        try{
+            System.out.println(stme);
+            ResultSet allBook = stme.executeQuery("SELECT * FROM book");
+
+            while (allBook.next()){
+            }
+
+
+        } catch (Exception ble){
+
+        }
     }
 }
