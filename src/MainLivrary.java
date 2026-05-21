@@ -12,25 +12,27 @@ public class MainLivrary {
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
-            Statement stme = conn.createStatement();
+            Statement stmt = conn.createStatement();
 
             while (true) {
                 System.out.println("(1)북리스트");
                 System.out.println("(2)대여하기");
                 System.out.println("(3)반납하기");
+                System.out.println("(4)등록하기");
+                System.out.println("(5)삭제하기");
                 System.out.println("(0)종료하기");
 
                 int menu = Integer.parseInt(sc.nextLine());
-                if (menu == 1) {
-                    bookList(stme);
-                } else if (menu == 2) {
-                    rental(conn, sc);
-                } else if (menu == 3) {
-                    returnBook(conn, sc);
-                } else if (menu == 4) {
-                    register(stme, sc);
-                } else if (menu == 0) {
-                    break;
+                switch (menu) {
+                    case 1:
+                        bookList(stmt); break;
+                    case 2: rental(conn, sc); break;
+                    case 3: returnBook(conn, sc); break;
+                    case 4: register(conn, sc); break;
+                    case 5: deleteBook(conn, sc); break;
+                    case 0:
+                        System.out.println("프로그램을 종료합니다.");
+                        System.exit(0);
                 }
             }
 
@@ -41,10 +43,10 @@ public class MainLivrary {
     }
 
     //모든책 확인
-    public static void bookList(Statement stme) {
+    public static void bookList(Statement stmt) {
         try {
-            System.out.println(stme);
-            ResultSet allBook = stme.executeQuery("SELECT * FROM book");
+            System.out.println(stmt);
+            ResultSet allBook = stmt.executeQuery("SELECT * FROM book");
 
             while (allBook.next()) {
                 String title = allBook.getString("title");
@@ -103,7 +105,7 @@ public class MainLivrary {
             } else {
                 System.out.println("빌려 간 기록이 없거나 잘못된 책 이름입니다.");
             }
-        } catch (Exception renCK) {
+        } catch (Exception returCK) {
 
             System.out.println("반납하기 오류 발생");
         }
@@ -114,10 +116,40 @@ public class MainLivrary {
         System.out.println("추가하실 책의 제목을 입력해주세요");
         String newBook = sc.nextLine();
         try{
-            String regiSql = INSERT INTO book (title, is_rented) VALUES
-        } catch (Exception renCK) {
+            String regiSql = "INSERT INTO book (title, is_rented) VALUES (?, 0)";
+            PreparedStatement pstmt = conn.prepareStatement(regiSql);
+            pstmt.setString(1, newBook);
+            int result = pstmt.executeUpdate();
+
+            if (result > 0 ){
+                System.out.println("[" + newBook + "] 책이 등록 되었습니다.");
+            } else {
+                System.out.println("책 등록에 실패하였습니다.");
+            }
+
+        } catch (Exception regiCk) {
 
             System.out.println("책 등록 오류 발생");
+        }
+    }
+
+    //책 삭제
+    public static void deleteBook(Connection conn, Scanner sc){
+        System.out.println("삭제하실 책의 제목을 입력해주세요");
+        String delBook = sc.nextLine();
+        try{
+            String deleteSql = "DELETE FROM book WHERE title = ?";
+            PreparedStatement pstmt = conn.prepareStatement(deleteSql);
+            pstmt.setString(1, delBook);
+            int result = pstmt.executeUpdate();
+
+            if (result > 0 ){
+                System.out.println("[" + delBook + "] 책이 삭제 되었습니다.");
+            } else {
+                System.out.println("해당 이름의 책을 찾을 수 없습니다..");
+            }
+        } catch (Exception delCk){
+            System.out.println("삭제 오류 발생");
         }
     }
 }
