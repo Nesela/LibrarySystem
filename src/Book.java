@@ -14,6 +14,7 @@ public class Book {
 
         this.bookTitle = title;
         allBook++;
+        // test
 
     }
     //책 삭제
